@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - image: grafana/grafana:8.2.1
+        name: grafana
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: grafana-storage-volume
+          mountPath: /var/lib/grafana
+        resources: {}
+      volumes:
+      - name: grafana-storage-volume
+        persistentVolumeClaim:
+          claimName: grafana-pvc
+status: {}
