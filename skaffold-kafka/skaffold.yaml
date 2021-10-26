@@ -1,0 +1,11 @@
+apiVersion: skaffold/v2beta24
+kind: Config
+metadata:
+  name: skaffold-kafka
+deploy:
+  kubectl:
+    manifests:
+    - kafka/deploy.yaml
+    - kafka/service.yaml
+    - zookeeper/deploy.yaml
+    - zookeeper/service.yaml
