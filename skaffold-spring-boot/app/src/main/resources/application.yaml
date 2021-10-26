@@ -1,0 +1,30 @@
+spring:
+  jmx:
+    enabled: true
+  cloud:
+    stream:
+      function:
+        definition: sampleConsume
+      bindings:
+        sampleConsume-in-0:
+          destination: sample
+          binder: kafka
+          consumer:
+            ackMode: RECORD
+      kafka:
+        binder:
+          auto-create-topics: true
+          brokers:
+            - kafka-svc:29092
+          configuration:
+            security.protocol: PLAINTEXT
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      probles:
+        enabled: true

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-kafka-demo
+  labels:
+    app: spring-kafka-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-kafka-demo
+  template:
+    metadata:
+      labels:
+        app: spring-kafka-demo
+    spec:
+      containers:
+      - image: spring-kafka-demo
+        name: spring-kafka-demo
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
