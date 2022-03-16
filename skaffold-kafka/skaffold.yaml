@@ -1,4 +1,4 @@
-apiVersion: skaffold/v2beta24
+apiVersion: skaffold/v2beta27
 kind: Config
 metadata:
   name: skaffold-kafka
@@ -9,3 +9,8 @@ deploy:
     - kafka/service.yaml
     - zookeeper/deploy.yaml
     - zookeeper/service.yaml
+portForward:
+- resourceType: service
+  resourceName: kafka-svc
+  port: 9092
+  localPort: 9092

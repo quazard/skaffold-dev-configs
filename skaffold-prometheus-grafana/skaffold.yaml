@@ -1,4 +1,4 @@
-apiVersion: skaffold/v2beta24
+apiVersion: skaffold/v2beta27
 kind: Config
 metadata:
   name: skaffold-prometheus-grafana
@@ -15,11 +15,11 @@ deploy:
     - prometheus/deploy.yaml
     - prometheus/svc.yaml
 portForward:
-- resourceType: deployment
-  resourceName: grafana
+- resourceType: service
+  resourceName: grafana-svc
   port: 3000
   localPort: 3000
-- resourceType: deployment
-  resourceName: prometheus
+- resourceType: service
+  resourceName: prometheus-svc
   port: 9090
   localPort: 9090

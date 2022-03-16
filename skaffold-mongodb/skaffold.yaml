@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: skaffold-mongodb
+deploy:
+  kubectl:
+    manifests:
+    - statefulset.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: mongodb-svc
+  port: 27017
+  localPort: 27017

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  serviceName: mongodb-svc
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - image: mongo:5.0.4
+        name: mongodb
+        ports:
+        - name: http
+          containerPort: 27017
+          protocol: TCP
+        volumeMounts:
+        - name: db-persist
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: db-persist
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
