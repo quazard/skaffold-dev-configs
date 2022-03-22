@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: skaffold-redis
+deploy:
+  kubectl:
+    manifests:
+    - redis/service.yaml
+    - redis/statefulset.yaml
+    - redisinsight/service.yaml
+    - redisinsight/statefulset.yaml
+portForward:
+- resourceType: service
+  resourceName: redis-insight-svc
+  port: 8001
+  localPort: 8001

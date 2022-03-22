@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  serviceName: redis-svc
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - image: redis:6.2.6-alpine3.15
+        name: redis
+        ports:
+        - name: http
+          containerPort: 6379
+          protocol: TCP

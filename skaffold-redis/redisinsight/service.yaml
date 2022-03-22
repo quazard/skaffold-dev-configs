@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-insight-svc
+  labels:
+    app: redis-insight
+spec:
+  ports:
+  - name: http
+    port: 8001
+    protocol: TCP
+    targetPort: 8001
+  selector:
+    app: redis-insight
