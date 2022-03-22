@@ -1,11 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: grafana
   labels:
     app: grafana
 spec:
   replicas: 1
+  serviceName: grafana-svc
   selector:
     matchLabels:
       app: grafana
@@ -18,13 +19,17 @@ spec:
       - image: grafana/grafana:8.2.1
         name: grafana
         ports:
-        - containerPort: 3000
+        - name: http
+          containerPort: 3000
+          protocol: TCP
         volumeMounts:
-        - name: grafana-storage-volume
+        - name: grafana-persist
           mountPath: /var/lib/grafana
-        resources: {}
-      volumes:
-      - name: grafana-storage-volume
-        persistentVolumeClaim:
-          claimName: grafana-pvc
-status: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: grafana-persist
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 256Mi

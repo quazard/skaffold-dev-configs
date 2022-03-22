@@ -5,15 +5,11 @@ metadata:
 deploy:
   kubectl:
     manifests:
-    - grafana/pv.yaml
-    - grafana/pvc.yaml
-    - grafana/deploy.yaml
-    - grafana/svc.yaml
-    - prometheus/cm.yaml
-    - prometheus/pv.yaml
-    - prometheus/pvc.yaml
-    - prometheus/deploy.yaml
-    - prometheus/svc.yaml
+    - grafana/statefulset.yaml
+    - grafana/service.yaml
+    - prometheus/configmap.yaml
+    - prometheus/statefulset.yaml
+    - prometheus/service.yaml
 portForward:
 - resourceType: service
   resourceName: grafana-svc
