@@ -8,3 +8,4 @@ deploy:
       - name: local-harbor
         remoteChart: harbor/harbor
         skipBuildDependencies: true
+        valuesFiles: [ values.yaml ]

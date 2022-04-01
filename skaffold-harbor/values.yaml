@@ -1,0 +1,10 @@
+expose:
+  ingress:
+    # not yet available on v1.8.2, meanwhile update ingress with ingressClassName: nginx
+    className: nginx
+    hosts:
+      core: local.cluster.dev
+
+externalURL: https://local.cluster.dev
+
+harborAdminPassword: demo
