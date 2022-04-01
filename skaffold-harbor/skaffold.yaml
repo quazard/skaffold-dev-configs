@@ -1,0 +1,10 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: skaffold-harbor
+deploy:
+  helm:
+    releases:
+      - name: local-harbor
+        remoteChart: harbor/harbor
+        skipBuildDependencies: true
