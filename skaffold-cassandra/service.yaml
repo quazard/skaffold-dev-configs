@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: skaffold-cassandra
+  name: skaffold-cassandra-svc
+spec:
+  clusterIP: None
+  ports:
+  - port: 9042
+  selector:
+    app: skaffold-cassandra

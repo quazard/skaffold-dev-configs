@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: skaffold-cassandra
+  labels:
+    app: skaffold-cassandra
+spec:
+  serviceName: skaffold-cassandra-svc
+  replicas: 3
+  selector:
+    matchLabels:
+      app: skaffold-cassandra
+  template:
+    metadata:
+      labels:
+        app: skaffold-cassandra
+    spec:
+      terminationGracePeriodSeconds: 1800
+      containers:
+      - name: skaffold-cassandra
+        image: cassandra:4.0.3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 7000
+          name: intra-node
+        - containerPort: 7001
+          name: tls-intra-node
+        - containerPort: 7199
+          name: jmx
+        - containerPort: 9042
+          name: cql
+        resources:
+          limits:
+            cpu: "500m"
+            memory: 1Gi
+          requests:
+            cpu: "500m"
+            memory: 1Gi
+        env:
+        - name: MAX_HEAP_SIZE
+          value: 512M
+        - name: HEAP_NEWSIZE
+          value: 100M
+        - name: CASSANDRA_SEEDS
+          value: "skaffold-cassandra-0.skaffold-cassandra-svc.default.svc.cluster.local"
+        - name: CASSANDRA_CLUSTER_NAME
+          value: "skaffold-cassandra"
+        - name: CASSANDRA_DC
+          value: "datacenter1"
+        - name: CASSANDRA_RACK
+          value: "cassandra-rack"
+        volumeMounts:
+        - name: cassandra-data
+          mountPath: /cassandra_data
+  volumeClaimTemplates:
+  - metadata:
+      name: cassandra-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

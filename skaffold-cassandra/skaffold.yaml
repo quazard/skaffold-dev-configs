@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: skaffold-cassandra
+deploy:
+  kubectl:
+    manifests:
+    - statefulset.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: skaffold-cassandra-svc
+  port: 9042
+  localPort: 9042
