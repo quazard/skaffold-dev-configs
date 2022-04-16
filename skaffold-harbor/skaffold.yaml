@@ -7,5 +7,6 @@ deploy:
     releases:
       - name: local-harbor
         remoteChart: harbor/harbor
+        version: 1.9.0
         skipBuildDependencies: true
         valuesFiles: [ values.yaml ]
