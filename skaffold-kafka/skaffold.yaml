@@ -9,8 +9,15 @@ deploy:
     - kafka/service.yaml
     - zookeeper/deploy.yaml
     - zookeeper/service.yaml
+    - kafka-magic/deploy.yaml
+    - kafka-magic/service.yaml
+    - kafka-magic/configmap.yaml
 portForward:
 - resourceType: service
   resourceName: kafka-svc
   port: 9092
   localPort: 9092
+- resourceType: service
+  resourceName: kafkamagic-svc
+  port: 80
+  localPort: 8080

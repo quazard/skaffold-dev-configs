@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kafkamagic
+  name: kafkamagic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafkamagic
+  template:
+    metadata:
+      labels:
+        app: kafkamagic
+    spec:
+      containers:
+      - image: digitsy/kafka-magic
+        name: kafka-magic
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - mountPath: /config/KafkaMagicConfig.db
+          name: kafkamagic-storage
+          subPath: KafkaMagicConfig.db
+          readOnly: true
+        env:
+        - name: KMAGIC_ALLOW_TOPIC_DELETE
+          value: "false"
+        - name: KMAGIC_CONFIG_STORE_TYPE
+          value: "file"
+        - name: KMAGIC_CONFIG_STORE_CONNECTION
+          value: "Data Source=/config/KafkaMagicConfig.db;"
+      volumes:
+      - name: kafkamagic-storage
+        configMap:
+          name: kafkamagic-cm
