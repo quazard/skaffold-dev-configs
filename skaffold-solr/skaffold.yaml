@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: skaffold-solr
+deploy:
+  helm:
+    releases:
+      - name: local-solr
+        remoteChart: bitnami/solr
+        version: 4.0.5
+        skipBuildDependencies: true
+        valuesFiles: [ values.yaml ]
