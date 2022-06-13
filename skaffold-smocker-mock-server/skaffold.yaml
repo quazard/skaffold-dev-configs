@@ -1,0 +1,18 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: skaffold-smocker
+deploy:
+  kubectl:
+    manifests:
+    - deploy.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: smocker-svc
+  port: 8080
+  localPort: 8080
+- resourceType: service
+  resourceName: smocker-svc
+  port: 8081
+  localPort: 8081

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smocker
+  labels:
+    app: smocker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smocker
+  template:
+    metadata:
+      labels:
+        app: smocker
+    spec:
+      containers:
+      - image: thiht/smocker:0.18.2
+        name: smocker
+        resources: {}
+        ports:
+        - containerPort: 8080
+          name: server
+        - containerPort: 8081
+          name: web
