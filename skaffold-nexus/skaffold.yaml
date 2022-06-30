@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: skaffold-nexus
+deploy:
+  kubectl:
+    manifests:
+    - deploy.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: nexus-svc
+  port: 8081
+  localPort: 8081
