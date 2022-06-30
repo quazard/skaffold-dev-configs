@@ -9,6 +9,6 @@ deploy:
     - service.yaml
 portForward:
 - resourceType: service
-  resourceName: skaffold-cassandra-svc
+  resourceName: cassandra-svc
   port: 9042
   localPort: 9042

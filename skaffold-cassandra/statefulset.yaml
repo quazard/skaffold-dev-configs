@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: skaffold-cassandra
+  name: cassandra
   labels:
-    app: skaffold-cassandra
+    app: cassandra
 spec:
-  serviceName: skaffold-cassandra-svc
+  serviceName: cassandra-svc
   replicas: 3
   selector:
     matchLabels:
-      app: skaffold-cassandra
+      app: cassandra
   template:
     metadata:
       labels:
-        app: skaffold-cassandra
+        app: cassandra
     spec:
       terminationGracePeriodSeconds: 1800
       containers:
-      - name: skaffold-cassandra
+      - name: cassandra
         image: cassandra:4.0.3
         imagePullPolicy: IfNotPresent
         ports:
@@ -42,9 +42,9 @@ spec:
         - name: HEAP_NEWSIZE
           value: 100M
         - name: CASSANDRA_SEEDS
-          value: "skaffold-cassandra-0.skaffold-cassandra-svc.default.svc.cluster.local"
+          value: "cassandra-0.cassandra-svc.default.svc.cluster.local"
         - name: CASSANDRA_CLUSTER_NAME
-          value: "skaffold-cassandra"
+          value: "cassandra"
         - name: CASSANDRA_DC
           value: "datacenter1"
         - name: CASSANDRA_RACK
