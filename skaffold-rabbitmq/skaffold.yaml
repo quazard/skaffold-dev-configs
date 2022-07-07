@@ -1,0 +1,18 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: skaffold-rabbitmq
+deploy:
+  kubectl:
+    manifests:
+    - deploy.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: rabbitmq-svc
+  port: 15672
+  localPort: 15672
+- resourceType: service
+  resourceName: rabbitmq-svc
+  port: 5672
+  localPort: 5672
