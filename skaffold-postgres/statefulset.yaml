@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  serviceName: postgres-svc
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - image: postgres:14.4-alpine
+        name: postgres
+        ports:
+        - name: http
+          containerPort: 5432
+          protocol: TCP
+        volumeMounts:
+        - name: db-persist
+          mountPath: /var/lib/postgresql/data
+        env:
+        - name: POSTGRES_USER
+          value: user
+        - name: POSTGRES_PASSWORD
+          value: password
+        - name: POSTGRES_DB
+          value: demodb
+  volumeClaimTemplates:
+  - metadata:
+      name: db-persist
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

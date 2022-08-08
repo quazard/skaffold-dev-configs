@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: skaffold-postgres
+deploy:
+  kubectl:
+    manifests:
+    - statefulset.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: postgres-svc
+  port: 5432
+  localPort: 5432
