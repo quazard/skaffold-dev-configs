@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pocketbase
+  labels:
+    app: pocketbase
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pocketbase
+  template:
+    metadata:
+      labels:
+        app: pocketbase
+    spec:
+      containers:
+      - image: bscott/pocketbase:v0.2.8
+        name: pocketbase
+        ports:
+        - containerPort: 8090
