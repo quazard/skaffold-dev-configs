@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: dnsmasq
+spec:
+  selector:
+    matchLabels:
+      app: dnsmasq
+  template:
+    metadata:
+      labels:
+        app: dnsmasq
+    spec:
+      containers:
+      - name: dnsmasq
+        image: dnsmasq:latest
+        imagePullPolicy: Never
+        resources:
+          limits:
+            cpu: "1"
+            memory: "32Mi"
+          requests:
+            cpu: "150m"
+            memory: "16Mi"
+        ports:
+        - name: dns
+          containerPort: 53
+          hostPort: 53
+          protocol: UDP
+        volumeMounts:
+        - name: dnsmasq-conf
+          mountPath: /etc/dnsmasq.conf
+          subPath: dnsmasq.conf
+          readOnly: true
+      volumes:
+      - name: dnsmasq-conf
+        configMap:
+          name: dnsmasq-conf
+      restartPolicy: Always

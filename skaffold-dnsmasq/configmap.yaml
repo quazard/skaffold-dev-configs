@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dnsmasq-conf
+data:
+  dnsmasq.conf: |
+    # address=/.local/0.0.0.0 # Modify according to domain and k8s cluster ip address where this is going to be deployed
