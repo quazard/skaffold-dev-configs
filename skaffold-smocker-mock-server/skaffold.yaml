@@ -10,6 +10,7 @@ deploy:
 portForward:
 - resourceType: service
   resourceName: smocker-svc
+  address: 0.0.0.0
   port: 8080
   localPort: 8080
 - resourceType: service
