@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+metadata:
+  name: skaffold-localstack
+deploy:
+  helm:
+    releases:
+      - name: localstack
+        remoteChart: localstack-repo/localstack
+        version: 0.4.1
+        skipBuildDependencies: true
+        #valuesFiles: [ values.yaml ]
