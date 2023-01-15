@@ -8,7 +8,7 @@ helm repo add harbor https://helm.goharbor.io
 ```
 
 ```sh
-skaffold dev --port-forward
+skaffold dev
 ```
 
 In order to push Docker images to the local registry, a self-signed certificate must be created to match the defined host name.

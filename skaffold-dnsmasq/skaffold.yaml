@@ -1,0 +1,8 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: skaffold-dnsmasq
+manifests:
+  rawYaml:
+    - configmap.yaml
+    - daemonset.yaml

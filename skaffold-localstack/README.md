@@ -8,5 +8,5 @@ helm repo add localstack-repo https://helm.localstack.cloud
 ```
 
 ```sh
-skaffold dev --port-forward
+skaffold dev
 ```

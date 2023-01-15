@@ -22,7 +22,7 @@ timeout 5
 Finally spin up the `dnsmasq` instance:
 
 ```sh
-skaffold dev --port-forward
+skaffold dev
 ```
 
 ### References

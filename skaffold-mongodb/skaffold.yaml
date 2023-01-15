@@ -1,12 +1,12 @@
-apiVersion: skaffold/v2beta27
+apiVersion: skaffold/v3
 kind: Config
 metadata:
   name: skaffold-mongodb
-deploy:
-  kubectl:
-    manifests:
+manifests:
+  rawYaml:
     - statefulset.yaml
     - service.yaml
+    - configmap.yaml
 portForward:
 - resourceType: service
   resourceName: mongodb-svc

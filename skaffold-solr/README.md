@@ -8,5 +8,5 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
 ```sh
-skaffold dev --port-forward
+skaffold dev
 ```

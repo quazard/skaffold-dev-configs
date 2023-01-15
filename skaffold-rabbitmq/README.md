@@ -5,5 +5,5 @@ Skaffold configuration which leverages on the official [RabbitMQ docker image](h
 More info about RabbitMQ Management plugin [here](https://www.rabbitmq.com/management.html).
 
 ```sh
-skaffold dev --port-forward
+skaffold dev
 ```

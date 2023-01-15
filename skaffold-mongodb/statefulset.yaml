@@ -6,6 +6,7 @@ metadata:
     app: mongodb
 spec:
   replicas: 1
+  minReadySeconds: 30
   serviceName: mongodb-svc
   selector:
     matchLabels:
@@ -15,6 +16,7 @@ spec:
       labels:
         app: mongodb
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
       - image: mongo:5.0.4
         name: mongodb
@@ -25,6 +27,43 @@ spec:
         volumeMounts:
         - name: db-persist
           mountPath: /data/db
+        - name: mongodb-conf
+          mountPath: /docker-entrypoint-initdb.d/mongo-init.js
+          subPath: mongo-init.js
+          readOnly: true
+        env:
+        # - name: MONGO_INITDB_ROOT_USERNAME
+        #   value: admin
+        # - name: MONGO_INITDB_ROOT_PASSWORD
+        #   value: password
+        - name: MONGO_INITDB_DATABASE
+          value: test
+        - name: HEALTHCHECK_USERNAME
+          value: healthCheck
+        - name: HEALTHCHECK_PASSWORD
+          value: local
+        livenessProbe:
+          exec:
+            command:
+            - bash
+            - "-c"
+            - echo 'db.stats().ok' | mongo -u $HEALTHCHECK_USERNAME -p $HEALTHCHECK_PASSWORD localhost:27017/test --quiet
+          initialDelaySeconds: 20
+          periodSeconds: 60
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - bash
+            - "-c"
+            - echo 'db.stats().ok' | mongo -u $HEALTHCHECK_USERNAME -p $HEALTHCHECK_PASSWORD localhost:27017/test --quiet
+          initialDelaySeconds: 20
+          periodSeconds: 60
+          failureThreshold: 3
+      volumes:
+      - name: mongodb-conf
+        configMap:
+          name: mongodb-conf
   volumeClaimTemplates:
   - metadata:
       name: db-persist
