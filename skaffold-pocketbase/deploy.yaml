@@ -14,8 +14,11 @@ spec:
       labels:
         app: pocketbase
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
-      - image: bscott/pocketbase:v0.2.8
+      - image: pocketbase:v0.11.2
         name: pocketbase
         ports:
-        - containerPort: 8090
+        - name: http
+          containerPort: 8090
+          protocol: TCP
