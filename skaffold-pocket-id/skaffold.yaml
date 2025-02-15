@@ -1,0 +1,14 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: skaffold-pocket-id
+manifests:
+  rawYaml:
+    - deploy.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: pocket-id-svc
+  address: 0.0.0.0
+  port: 4000
+  localPort: 4000

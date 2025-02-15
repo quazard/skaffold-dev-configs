@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pocket-id
+  name: pocket-id
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pocket-id
+  template:
+    metadata:
+      labels:
+        app: pocket-id
+    spec:
+      containers:
+      - image: ghcr.io/pocket-id/pocket-id:v0.33
+        name: pocket-id
+        ports:
+        - containerPort: 4000
+          protocol: TCP
+        env:
+        - name: PUBLIC_APP_URL
+          value: "http://localhost"
+        - name: CADDY_PORT
+          value: "4000"
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TRUST_PROXY
+          value: "false"
+        - name: DB_PROVIDER
+          value: "postgres"
+        - name: POSTGRES_CONNECTION_STRING
+          value: "postgresql://pocket_id:pocket_id@postgres-svc:5432/pocket_id?sslmode=disable"
