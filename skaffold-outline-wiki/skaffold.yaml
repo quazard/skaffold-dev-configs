@@ -1,0 +1,14 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: skaffold-outline-wiki
+manifests:
+  rawYaml:
+    - deploy.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: outline-wiki-svc
+  address: 0.0.0.0
+  port: 3000
+  localPort: 3000

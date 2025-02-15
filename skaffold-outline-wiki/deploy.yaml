@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: outline-wiki
+  name: outline-wiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: outline-wiki
+  template:
+    metadata:
+      labels:
+        app: outline-wiki
+    spec:
+      containers:
+      - image: docker.getoutline.com/outlinewiki/outline:0.82.0
+        name: outline
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: SECRET_KEY
+          value: "b7a286a290213a0111c0b0f56034b5a1d315cca203d0ff47310f7158b7acafb1"
+        - name: UTILS_SECRET
+          value: "36a13030b063aeb6e2d9c5f8ae17ef27827fdd7d542b59cdd5899ea5e00388f0"
+        - name: DATABASE_URL
+          value: postgres://outline:outline@postgres-svc:5432/outline
+        - name: PGSSLMODE
+          value: disable
+        - name: REDIS_URL
+          value: redis://redis-svc:6379/1
+        - name: FILE_STORAGE
+          value: local
+        - name: URL
+          value: http://0.0.0.0:3000
+        - name: PORT
+          value: "3000"
+        - name: FORCE_HTTPS
+          value: "false"

@@ -10,6 +10,10 @@ manifests:
     - redisinsight/statefulset.yaml
 portForward:
 - resourceType: service
+  resourceName: redis-svc
+  port: 6379
+  localPort: 6379
+- resourceType: service
   resourceName: redis-insight-svc
   port: 8001
   localPort: 8001
