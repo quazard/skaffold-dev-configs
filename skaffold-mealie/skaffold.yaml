@@ -1,0 +1,14 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: skaffold-mealie
+manifests:
+  rawYaml:
+    - deploy.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: mealie-svc
+  address: 0.0.0.0
+  port: 9000
+  localPort: 9000
