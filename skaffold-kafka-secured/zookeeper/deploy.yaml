@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  labels:
+    app: zookeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+      - image: wurstmeister/zookeeper:latest
+        name: zookeeper
+        resources: {}
+        ports:
+        - containerPort: 2181
+        env:
+        - name: JVMFLAGS
+          value: "-Djava.security.auth.login.config=/app/config/jaas.conf -Dzookeeper.authProvider.1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider -Dzookeeper.requireClientAuthScheme=sasl"
+        volumeMounts:
+        - mountPath: /app/config/jaas.conf
+          name: zookeeper-config-storage
+          subPath: jaas.conf
+          readOnly: true
+      volumes:
+      - name: zookeeper-config-storage
+        configMap:
+          name: zookeeper-cm

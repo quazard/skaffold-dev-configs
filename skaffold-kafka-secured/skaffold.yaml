@@ -1,0 +1,26 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: skaffold-kafka
+manifests:
+  rawYaml:
+    - kafka/deploy.yaml
+    - kafka/service.yaml
+    - kafka/configmap.yaml
+    - zookeeper/deploy.yaml
+    - zookeeper/service.yaml
+    - zookeeper/configmap.yaml
+    - kafka-magic/deploy.yaml
+    - kafka-magic/service.yaml
+    - kafka-magic/configmap.yaml
+portForward:
+- resourceType: service
+  resourceName: kafka-svc
+  namespace: default
+  port: 9092
+  localPort: 9092
+- resourceType: service
+  resourceName: kafkamagic-svc
+  namespace: default
+  port: 80
+  localPort: 8080

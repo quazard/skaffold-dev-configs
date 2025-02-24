@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zookeeper-cm
+data:
+  jaas.conf: |
+    Server {
+      org.apache.zookeeper.server.auth.DigestLoginModule required
+      user_internal="12345";
+    };

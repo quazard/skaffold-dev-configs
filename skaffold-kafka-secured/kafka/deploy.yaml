@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+  labels:
+    app: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - image: wurstmeister/kafka:2.12-2.5.0
+        name: kafka
+        ports:
+        - containerPort: 29092
+          name: internal
+        - containerPort: 9092
+          name: external
+        securityContext:
+          capabilities:
+            add: [ "NET_ADMIN" ]
+        env:
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: zookeeper-svc:2181
+        - name: KAFKA_ZOOKEEPER_SET_ACL
+          value: "true"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: INTERNAL://kafka-svc:29092,OUTSIDE://localhost:9092
+        - name: KAFKA_LISTENERS
+          value: INTERNAL://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+        - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+          value: INTERNAL:PLAINTEXT,OUTSIDE:SASL_PLAINTEXT
+        - name: KAFKA_INTER_BROKER_LISTENER_NAME
+          value: INTERNAL
+        - name: KAFKA_SASL_ENABLED_MECHANISMS
+          value: "PLAIN,SCRAM-SHA-256,SCRAM-SHA-512"
+        - name: KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL
+          value: "PLAIN"
+        - name: KAFKA_AUTHORIZER_CLASS_NAME
+          value: "kafka.security.authorizer.AclAuthorizer"
+        - name: KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND
+          value: "true"
+        - name: KAFKA_SUPER_USERS
+          value: "User:admin"
+        - name: KAFKA_OPTS
+          value: "-Djava.security.auth.login.config=/app/config/jaas.conf"
+        volumeMounts:
+        - mountPath: /app/config/jaas.conf
+          name: kafka-config-storage
+          subPath: jaas.conf
+          readOnly: true
+        - mountPath: /app/config/sasl_users_creation.sh
+          name: kafka-config-storage
+          subPath: sasl_users_creation.sh
+          readOnly: false
+        startupProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - /app/config/sasl_users_creation.sh
+          initialDelaySeconds: 30
+          timeoutSeconds: 60
+      volumes:
+      - name: kafka-config-storage
+        configMap:
+          name: kafka-cm
+          defaultMode: 0744
