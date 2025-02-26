@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: youtrack
+  name: youtrack-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    name: http
+    targetPort: 8080
+  selector:
+    app: youtrack
+

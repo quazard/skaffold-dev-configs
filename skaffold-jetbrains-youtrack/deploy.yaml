@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: youtrack
+  name: youtrack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: youtrack
+  template:
+    metadata:
+      labels:
+        app: youtrack
+    spec:
+      containers:
+      - image: jetbrains/youtrack:2025.1.62967
+        name: youtrack
+
