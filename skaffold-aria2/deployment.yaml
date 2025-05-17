@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: aria2
+  name: aria2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aria2
+  template:
+    metadata:
+      labels:
+        app: aria2
+    spec:
+      containers:
+      - image: hurlenko/aria2-ariang:1.3.10
+        name: aria2-ariang
+        volumeMounts:
+        - mountPath: /aria2/data
+          name: aria-vol-downloads
+        - mountPath: /aria2/conf
+          name: aria-config-vol
+      volumes:
+      - name: aria-config-vol
+        persistentVolumeClaim:
+          claimName: aria-config-pvc
+      - name: aria-vol-downloads
+        persistentVolumeClaim:
+          claimName: aria-downloads-pvc

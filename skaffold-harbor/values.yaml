@@ -1,9 +1,0 @@
-expose:
-  ingress:
-    className: nginx
-    hosts:
-      core: local.cluster.dev
-
-externalURL: https://local.cluster.dev
-
-harborAdminPassword: demo

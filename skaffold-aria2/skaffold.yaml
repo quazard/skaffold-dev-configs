@@ -1,0 +1,16 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: skaffold-aria2
+manifests:
+  rawYaml:
+    - deployment.yaml
+    - service.yaml
+    - pvc-config.yaml
+    - pvc-downloads.yaml
+portForward:
+- resourceType: service
+  resourceName: aria2-svc
+  address: 0.0.0.0
+  port: 8080
+  localPort: 8080
