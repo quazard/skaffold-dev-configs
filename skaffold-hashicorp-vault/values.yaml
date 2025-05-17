@@ -1,0 +1,40 @@
+injector:
+  enabled: true
+
+server:
+  enabled: true
+  dev:
+    enabled: true
+  resources:
+    requests:
+      memory: "100Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "400m"
+  readinessProbe:
+    enabled: true
+    path: /v1/sys/health?standbyok=true
+    failureThreshold: 2
+    initialDelaySeconds: 10
+    periodSeconds: 5
+  livelinessProbe:
+    enabled: true
+    path: /v1/sys/health?standbyok=true
+    initialDelaySeconds: 60
+    failureThreshold: 2
+    periodSeconds: 5
+  extraEnvironmentVars:
+    VAULT_ADDR: "http://0.0.0.0:8200"
+  dataStorage:
+    enabled: true
+    size: 1Gi
+    mountPath: /vault/data
+    accessMode: ReadWriteOnce
+  ingress:
+    enabled: false
+
+ui:
+  enabled: true
+  serviceType: NodePort
+  serviceNodePort: 30001

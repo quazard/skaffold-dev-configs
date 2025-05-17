@@ -1,0 +1,12 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: skaffold-hashicorp-vault
+deploy:
+  helm:
+    releases:
+      - name: local-hashicorp-vault
+        remoteChart: hashicorp/vault
+        version: 0.30.0
+        skipBuildDependencies: true
+        valuesFiles: [ values.yaml ]
