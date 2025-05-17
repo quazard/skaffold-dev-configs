@@ -15,7 +15,7 @@ spec:
         app: smocker
     spec:
       containers:
-      - image: thiht/smocker:0.18.2
+      - image: ghcr.io/smocker-dev/smocker:1.0.0
         name: smocker
         resources: {}
         ports:
