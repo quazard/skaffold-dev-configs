@@ -16,7 +16,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-      - image: pocketbase:v0.11.2
+      - image: pocketbase:v0.28.1
         name: pocketbase
         ports:
         - name: http

@@ -16,7 +16,7 @@ spec:
         app: redis
     spec:
       containers:
-      - image: redis:6.2.6-alpine3.15
+      - image: redis:8.0.1-alpine3.21
         name: redis
         ports:
         - name: http

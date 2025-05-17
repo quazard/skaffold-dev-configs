@@ -1,0 +1,31 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: skaffold-grafana-prometheus-loki
+deploy:
+  helm:
+    releases:
+      - name: local-grafana-loki
+        remoteChart: grafana/loki
+        version: 6.29.0
+        skipBuildDependencies: true
+        valuesFiles: [ values.loki.yaml ]
+      - name: local-grafana
+        remoteChart: grafana/grafana
+        version: 9.0.0
+        skipBuildDependencies: true
+      # valuesFiles: [ values.yaml ]
+      - name: local-prometheus
+        remoteChart: prometheus-community/prometheus
+        version: 27.16.0
+        skipBuildDependencies: true
+      # valuesFiles: [ values.yaml ]
+portForward:
+- resourceType: service
+  resourceName: local-grafana
+  port: 80
+  localPort: 3000
+- resourceType: service
+  resourceName: local-prometheus-server
+  port: 80
+  localPort: 9090

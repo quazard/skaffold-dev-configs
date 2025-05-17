@@ -7,6 +7,6 @@ deploy:
     releases:
       - name: localstack
         remoteChart: localstack-repo/localstack
-        version: 0.4.1
+        version: 0.6.24
         skipBuildDependencies: true
         #valuesFiles: [ values.yaml ]

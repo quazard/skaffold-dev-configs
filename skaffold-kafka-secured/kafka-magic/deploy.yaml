@@ -15,7 +15,7 @@ spec:
         app: kafkamagic
     spec:
       containers:
-      - image: digitsy/kafka-magic
+      - image: digitsy/kafka-magic:4.0.1.138
         name: kafka-magic
         imagePullPolicy: IfNotPresent
         ports:

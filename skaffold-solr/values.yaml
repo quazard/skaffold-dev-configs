@@ -1,4 +1,9 @@
 replicaCount: 3
 
+livenessProbe:
+  enabled: false
+readinessProbe:
+  enabled: false
+
 zookeeper:
-  replicaCount: 3
+  replicaCount: 1

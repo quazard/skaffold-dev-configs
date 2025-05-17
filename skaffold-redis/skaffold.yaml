@@ -15,5 +15,5 @@ portForward:
   localPort: 6379
 - resourceType: service
   resourceName: redis-insight-svc
-  port: 8001
-  localPort: 8001
+  port: 5540
+  localPort: 5540

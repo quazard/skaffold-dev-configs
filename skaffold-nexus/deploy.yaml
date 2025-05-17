@@ -15,7 +15,7 @@ spec:
         app: nexus
     spec:
       containers:
-      - image: sonatype/nexus3:3.39.0
+      - image: sonatype/nexus3:3.80.0
         name: nexus
         resources:
           limits:

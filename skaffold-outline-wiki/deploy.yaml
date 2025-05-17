@@ -15,7 +15,7 @@ spec:
         app: outline-wiki
     spec:
       containers:
-      - image: docker.getoutline.com/outlinewiki/outline:0.82.0
+      - image: docker.getoutline.com/outlinewiki/outline:0.84.0
         name: outline
         ports:
         - containerPort: 3000

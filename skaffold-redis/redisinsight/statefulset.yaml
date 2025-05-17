@@ -4,6 +4,7 @@ metadata:
   name: redis-insight
   labels:
     app: redis-insight
+  namespace: default
 spec:
   replicas: 1
   serviceName: redis-insight-svc
@@ -16,11 +17,11 @@ spec:
         app: redis-insight
     spec:
       containers:
-      - image: redislabs/redisinsight:latest
+      - image: redislabs/redisinsight:2.68.0
         name: redis-insight
         ports:
         - name: http
-          containerPort: 8001
+          containerPort: 5540
           protocol: TCP
         volumeMounts:
         - name: redis-insight-persist

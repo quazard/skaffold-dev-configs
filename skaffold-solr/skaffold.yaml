@@ -7,6 +7,12 @@ deploy:
     releases:
       - name: local-solr
         remoteChart: bitnami/solr
-        version: 4.0.5
+        version: 9.6.4
         skipBuildDependencies: true
         valuesFiles: [ values.yaml ]
+portForward:
+- resourceType: service
+  resourceName: local-solr
+  address: 0.0.0.0
+  port: 8983
+  localPort: 8983

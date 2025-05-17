@@ -32,10 +32,10 @@ spec:
           subPath: mongo-init.js
           readOnly: true
         env:
-        # - name: MONGO_INITDB_ROOT_USERNAME
-        #   value: admin
-        # - name: MONGO_INITDB_ROOT_PASSWORD
-        #   value: password
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: admin
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: password
         - name: MONGO_INITDB_DATABASE
           value: test
         - name: HEALTHCHECK_USERNAME
