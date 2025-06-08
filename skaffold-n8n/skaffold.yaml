@@ -1,0 +1,14 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: skaffold-n8n
+manifests:
+  rawYaml:
+    - deploy.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: n8n-svc
+  address: 0.0.0.0
+  port: 5678
+  localPort: 5678
