@@ -1,0 +1,20 @@
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://local-prometheus-server.default.svc.cluster.local:80
+      access: proxy
+      isDefault: true
+    - name: Loki
+      type: loki
+      url: http://local-grafana-loki.default.svc.cluster.local:3100
+      access: proxy
