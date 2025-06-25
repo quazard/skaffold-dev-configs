@@ -1,0 +1,12 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: skaffold-opentelemetry
+deploy:
+  helm:
+    releases:
+      - name: opentelemetry
+        remoteChart: open-telemetry/opentelemetry-collector
+        version: 0.127.1
+        skipBuildDependencies: true
+        valuesFiles: [ values.yaml ]

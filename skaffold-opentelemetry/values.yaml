@@ -1,0 +1,97 @@
+mode: daemonset
+image:
+  repository: otel/opentelemetry-collector-contrib
+  tag: 0.128.0
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+presets:
+  kubernetesAttributes:
+    enabled: true
+  hostMetrics:
+    enabled: true
+  kubeletMetrics:
+    enabled: true
+  logsCollection:
+    enabled: true
+clusterRole:
+  create: true
+  name: "opentelemetry-collector-admin"
+  rules:
+  - verbs:
+    - "*"
+    resources: 
+      - "*"
+    apiGroups: 
+      - "*"
+  - verbs:
+    - get
+    - list
+    - watch
+    nonResourceURLs: 
+      - "*"
+  clusterRoleBinding:
+    name: "opentelemetry-collector-admin"
+serviceAccount:
+  create: true
+  name: "opentelemetry-collector-admin"
+config:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+  exporters:
+    # prometheusremotewrite:
+    #   endpoint: http://local-prometheus-server.default.svc.cluster.local:80/api/v1/write
+    otlphttp/prometheus:
+      endpoint: http://local-prometheus-server.default.svc.cluster.local:80/api/v1/otlp
+    otlphttp/loki:
+      endpoint: http://local-grafana-loki.default.svc.cluster.local:3100/otlp
+  extensions:
+    health_check:
+      endpoint: ${env:MY_POD_IP}:13133
+    k8s_leader_elector:
+      auth_type: kubeConfig
+      lease_name: opentelemetry-collector
+      lease_namespace: default
+  service:
+    extensions: 
+      - health_check
+      - k8s_leader_elector
+    telemetry:
+      metrics:
+        address: 0.0.0.0:8888
+      logs:
+        encoding: json
+    pipelines:
+      metrics:
+        receivers: 
+          - otlp
+        processors: 
+          - k8sattributes
+          - batch
+        exporters: 
+          - otlphttp/prometheus
+      logs:
+        receivers: 
+          - otlp
+        processors: 
+          - k8sattributes
+          - batch
+        exporters: 
+          - otlphttp/loki
+ports:
+  metrics:
+    enabled: true
+    containerPort: 8888
+    servicePort: 8888
+    protocol: TCP
+serviceMonitor:
+  enabled: true
