@@ -42,6 +42,17 @@ clusterRole:
       - deployments
     apiGroups: 
       - "apps"
+  - verbs:
+    - get
+    - list
+    - watch
+    - create
+    - update
+    - delete
+    resources: 
+      - leases
+    apiGroups: 
+      - "coordination.k8s.io"
   clusterRoleBinding:
     name: "opentelemetry-collector"
 serviceAccount:
