@@ -6,8 +6,8 @@ metadata:
   name: pocket-id-svc
 spec:
   ports:
-  - port: 4000
+  - port: 1411
     protocol: TCP
-    targetPort: 4000
+    targetPort: 1411
   selector:
     app: pocket-id

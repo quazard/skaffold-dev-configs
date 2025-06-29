@@ -10,5 +10,5 @@ portForward:
 - resourceType: service
   resourceName: pocket-id-svc
   address: 0.0.0.0
-  port: 4000
-  localPort: 4000
+  port: 1411
+  localPort: 1411

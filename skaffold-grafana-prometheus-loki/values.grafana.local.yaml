@@ -5,6 +5,8 @@ resources:
   limits:
     cpu: "500m"
     memory: "256Mi"
+persistence:
+  enabled: false
 datasources:
   datasources.yaml:
     apiVersion: 1

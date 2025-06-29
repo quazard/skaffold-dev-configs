@@ -5,6 +5,46 @@ resources:
   limits:
     cpu: "500m"
     memory: "256Mi"
+persistence:
+  enabled: false
+env:
+  GF_DATABASE_TYPE: postgres
+  GF_DATABASE_HOST: postgres-svc.default.svc.cluster.local:5432
+  GF_DATABASE_NAME: grafana
+  GF_DATABASE_USER: grafana
+  GF_DATABASE_PASSWORD: grafana
+  GF_DATABASE_SSL_MODE: disable
+  # GF_AUTH_GENERIC_OAUTH_CLIENT_ID: ""
+  # GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: ""
+  # GF_AUTH_GENERIC_OAUTH_AUTH_URL: http://localhost:1411/authorize
+  # GF_AUTH_GENERIC_OAUTH_TOKEN_URL: http://pocket-id-svc.default.svc.cluster.local:1411/api/oidc/token
+  # GF_AUTH_GENERIC_OAUTH_API_URL: http://pocket-id-svc.default.svc.cluster.local:1411/api/oidc/userinfo
+  # GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email groups offline_access"
+  # GF_AUTH_GENERIC_OAUTH_TLS_SKIP_VERIFY_INSECURE: true
+# grafana.ini:
+#   auth:
+#     disable_login_form: true
+#     oauth_auto_login: false
+#   auth.basic:
+#     enabled: false
+#   auth.generic_oauth:
+#     enabled: true
+#     name: "Pocket ID"
+#     allow_sign_up: true
+#     role_attribute_path: contains(groups[*], 'grafana_admins') && 'GrafanaAdmin' || contains(groups[*], 'grafana_editors') && 'Editor' || contains(groups[*], 'grafana_viewers') && 'Viewer' || 'Viewer'
+#     allow_assign_grafana_admin: true
+#     skip_org_role_sync: false
+#     use_pkce: true
+#     use_refresh_token: true
+#     login_attribute_path: preferred_username
+#     name_attribute_path: name
+#     email_attribute_path: email
+#   security:
+#     disable_initial_admin_creation: true
+# admin:
+#   existingSecret: ""
+#   user: ""
+#   password: ""
 datasources:
   datasources.yaml:
     apiVersion: 1
@@ -29,3 +69,29 @@ datasources:
       type: loki
       url: http://local-grafana-loki-gateway.default.svc.cluster.local
       access: proxy
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      updateIntervalSeconds: 10
+      options:
+        path: /var/lib/grafana/dashboards/default
+dashboards:
+  default:
+    kubernetes-cluster:
+      gnetId: 315
+      revision: 1
+      datasource: Mimir
+    # node-exporter:
+    #   gnetId: 1860
+    #   revision: 1
+    #   datasource: Mimir
+    # loki-operational:
+    #   gnetId: 13639
+    #   revision: 1
+    #   datasource: Loki

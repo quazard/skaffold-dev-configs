@@ -6,9 +6,9 @@ This Skaffold configuration creates one instance of Pocket ID for OIDC authentic
 skaffold dev
 ```
 
-Pocket ID is accessible on port 4000 using unsecure http protocol, might not be fully functional as it requires a valid domain name with a trusted SSL certificate.
+Pocket ID is accessible on port 1411 using unsecure http protocol, might not be fully functional as it requires a valid domain name with a trusted SSL certificate.
 
-Entrypoint: [http://localhost:4000/login/setup](http://localhost:4000/login/setup)
+Entrypoint: [http://localhost:1411/setup](http://localhost:1411/setup)
 
 ### References
 
