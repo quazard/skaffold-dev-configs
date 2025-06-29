@@ -1,0 +1,17 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: skaffold-minio
+deploy:
+  helm:
+    releases:
+      - name: local-minio-operator
+        remoteChart: minio-operator/operator
+        version: 7.0.0
+        skipBuildDependencies: true
+        valuesFiles: [ values.operator.yaml ]
+      - name: local-minio-tenant
+        remoteChart: minio-operator/tenant
+        version: 7.0.0
+        skipBuildDependencies: true
+        valuesFiles: [ values.tenant.yaml ]

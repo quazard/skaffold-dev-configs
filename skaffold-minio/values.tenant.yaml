@@ -1,0 +1,23 @@
+tenant:
+  name: minio
+  configuration:
+    name: minio-env-configuration
+  configSecret:
+    name: minio-env-configuration
+    accessKey: minio
+    secretKey: minio123
+  pools:
+    - servers: 3
+      name: pool-0
+      volumesPerServer: 3
+      size: 5Gi
+  exposeServices:
+    minio: true
+    console: true
+  certificate:
+    requestAutoCert: false
+ingress:
+  api:
+    enabled: false
+  console:
+    enabled: false
