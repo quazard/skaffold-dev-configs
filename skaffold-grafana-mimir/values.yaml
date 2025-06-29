@@ -1,0 +1,14 @@
+mimir:
+  structuredConfig:
+    blocks_storage:
+      backend: s3
+      s3:
+        endpoint: minio-hl.default.svc.cluster.local:9000
+        bucket_name: grafana-mimir-tsdb
+        access_key_id: <access_key_id>
+        secret_access_key: <secret_access_key>
+        insecure: true
+alertmanager:
+  enabled: false
+minio:
+  enabled: false

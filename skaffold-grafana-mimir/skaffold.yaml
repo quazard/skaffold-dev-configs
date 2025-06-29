@@ -1,0 +1,12 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: skaffold-grafana-mimir
+deploy:
+  helm:
+    releases:
+      - name: local-grafana-mimir
+        remoteChart: grafana/mimir-distributed
+        version: 5.7.0
+        skipBuildDependencies: true
+        valuesFiles: [ values.yaml ]

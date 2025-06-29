@@ -13,3 +13,7 @@ For endpoint access, look for exposed `minio-console` service NodePort in local 
 Credentials:
 - username: minio
 - password: minio123
+
+### References
+
+* [MinIO Github Repository](https://github.com/minio/minio)
