@@ -18,5 +18,11 @@ skaffold dev
 
 > Note: Grafana admin password has to be retrieved from secret. Kubernetes command is shown in container logs.
 
+```sh
+kubectl get secret --namespace default local-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
+
 Grafana Entrypoint: http://localhost:3000
 Prometheus Entrypoint: http://localhost:9090
+
+Folder contains different set of Helm Chart values files for local and cloud deployment (or sort of cloud using MinIO and Prometheus/Mimir). Change configuration depending on needs.

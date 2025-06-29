@@ -16,6 +16,8 @@ server:
     - web.enable-lifecycle
     - web.enable-otlp-receiver
     # - web.enable-remote-write-receiver
+  # remoteWrite:
+  #   - url: http://local-grafana-mimir-nginx.default.svc.cluster.local/api/v1/push
 alertmanager:
   enabled: false
 kube-state-metrics:

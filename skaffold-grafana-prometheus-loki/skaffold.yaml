@@ -10,17 +10,20 @@ deploy:
         version: 6.30.1
         skipBuildDependencies: true
         valuesFiles: [ values.loki.local.yaml ]
+        # valuesFiles: [ values.loki.cloud.yaml ]
       - name: local-grafana
         remoteChart: grafana/grafana
         version: 9.2.7
         skipBuildDependencies: true
         valuesFiles: [ values.grafana.local.yaml ]
+        # valuesFiles: [ values.grafana.cloud.yaml ]
       - name: local-prometheus
         remoteChart: prometheus-community/prometheus
         version: 27.21.0
         skipBuildDependencies: true
         valuesFiles: [ values.prometheus.local.yaml ]
         # valuesFiles: [ values.prometheus.local-otlp.yaml ]
+        # valuesFiles: [ values.prometheus.cloud-otlp.yaml ]
 portForward:
 - resourceType: service
   resourceName: local-grafana

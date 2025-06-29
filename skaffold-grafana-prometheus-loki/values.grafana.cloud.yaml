@@ -1,0 +1,31 @@
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://local-prometheus-server.default.svc.cluster.local:80
+      access: proxy
+      isDefault: true
+    # - name: Mimir
+    #   type: prometheus
+    #   url: http://local-grafana-mimir-nginx.default.svc.cluster.local/prometheus
+    #   access: proxy
+    #   isDefault: true
+      # SingleBinary deploymentMode datasource
+    # - name: Loki
+    #   type: loki
+    #   url: http://local-grafana-loki.default.svc.cluster.local:3100
+    #   access: proxy
+      # SimpleScalable deploymentMode datasource
+    - name: Loki
+      type: loki
+      url: http://local-grafana-loki-gateway.default.svc.cluster.local
+      access: proxy
