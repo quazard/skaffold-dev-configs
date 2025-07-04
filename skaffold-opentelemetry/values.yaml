@@ -120,10 +120,14 @@ config:
   exporters:
     # prometheusremotewrite:
     #   endpoint: http://local-prometheus-server.default.svc.cluster.local:80/api/v1/write
+    # otlphttp/prometheus:
+    #   endpoint: http://local-prometheus-server.default.svc.cluster.local:80/api/v1/otlp
     otlphttp/prometheus:
-      endpoint: http://local-prometheus-server.default.svc.cluster.local:80/api/v1/otlp
+      endpoint: http://local-grafana-mimir-nginx.default.svc.cluster.local:80/otlp
+    # otlphttp/loki:
+    #   endpoint: http://local-grafana-loki.default.svc.cluster.local:3100/otlp
     otlphttp/loki:
-      endpoint: http://local-grafana-loki.default.svc.cluster.local:3100/otlp
+      endpoint: http://local-grafana-loki-gateway.default.svc.cluster.local:80/otlp
   extensions:
     health_check:
       endpoint: ${env:MY_POD_IP}:13133
@@ -137,7 +141,12 @@ config:
       - k8s_leader_elector
     telemetry:
       metrics:
-        address: 0.0.0.0:8888
+        readers:
+          - pull:
+              exporter:
+                prometheus:
+                  host: '0.0.0.0'
+                  port: 8888
       logs:
         encoding: json
     pipelines:
