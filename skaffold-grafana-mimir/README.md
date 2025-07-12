@@ -6,7 +6,7 @@ Create a Grafana Mimir instance for local development.
 skaffold dev
 ```
 
-Service is dependant on MinIO instance (or any S3 compatible storage). Enable it through Helm Chart values file or use [MinIO skaffold](https://github.com/quazard/skaffold-minio) repository.
+Service is dependant on MinIO instance (or any S3 compatible storage). Enable it through Helm Chart values file or use [MinIO skaffold](https://github.com/quazard/skaffold-dev-configs/tree/main/skaffold-minio) repository.
 
 ### References
 
