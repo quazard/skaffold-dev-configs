@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: lldap
+  name: lldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lldap
+  template:
+    metadata:
+      labels:
+        app: lldap
+    spec:
+      containers:
+      - image: ghcr.io/lldap/lldap:2025-07-10-debian
+        name: lldap
+        ports:
+        - name: ldap
+          containerPort: 3890
+          protocol: TCP
+        - name: ui
+          containerPort: 17170
+          protocol: TCP
+        env:
+        - name: LLDAP_JWT_SECRET
+          value: "random_jwt_secret"
+        - name: LLDAP_LDAP_BASE_DN
+          value: "dc=example,dc=com"
+        - name: LLDAP_LDAP_USER_PASS
+          value: "password"

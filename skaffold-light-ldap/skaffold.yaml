@@ -1,0 +1,19 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: skaffold-light-ldap
+manifests:
+  rawYaml:
+    - deploy.yaml
+    - service.yaml
+portForward:
+- resourceType: service
+  resourceName: lldap-svc
+  address: 0.0.0.0
+  port: 3890
+  localPort: 3890
+- resourceType: service
+  resourceName: lldap-svc
+  address: 0.0.0.0
+  port: 17170
+  localPort: 17170
