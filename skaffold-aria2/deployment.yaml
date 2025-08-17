@@ -15,7 +15,7 @@ spec:
         app: aria2
     spec:
       containers:
-      - image: hurlenko/aria2-ariang:1.3.10
+      - image: hurlenko/aria2-ariang:1.3.11
         name: aria2-ariang
         volumeMounts:
         - mountPath: /aria2/data

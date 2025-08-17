@@ -15,7 +15,7 @@ spec:
         app: lldap
     spec:
       containers:
-      - image: ghcr.io/lldap/lldap:2025-07-10-debian
+      - image: ghcr.io/lldap/lldap:2025-08-14-debian
         name: lldap
         ports:
         - name: ldap

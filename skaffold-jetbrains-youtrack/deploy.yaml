@@ -15,6 +15,6 @@ spec:
         app: youtrack
     spec:
       containers:
-      - image: jetbrains/youtrack:2025.1.74704
+      - image: jetbrains/youtrack:2025.2.92387
         name: youtrack
 

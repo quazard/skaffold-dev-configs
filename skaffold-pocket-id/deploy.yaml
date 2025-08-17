@@ -15,7 +15,7 @@ spec:
         app: pocket-id
     spec:
       containers:
-      - image: ghcr.io/pocket-id/pocket-id:v1.5.0
+      - image: ghcr.io/pocket-id/pocket-id:v1.7.0
         name: pocket-id
         ports:
         - containerPort: 1411
