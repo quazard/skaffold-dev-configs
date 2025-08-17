@@ -31,3 +31,5 @@ spec:
           value: "dc=example,dc=com"
         - name: LLDAP_LDAP_USER_PASS
           value: "password"
+        # - name: LLDAP_DATABASE_URL
+        #   value: "postgresql://lldap:lldap@postgres-svc:5432/lldap?sslmode=disable"

@@ -35,3 +35,37 @@ spec:
           value: "postgres"
         - name: DB_CONNECTION_STRING
           value: "postgresql://pocket_id:pocket_id@postgres-svc:5432/pocket_id?sslmode=disable"
+        # - name: LDAP_ENABLED
+        #   value: "true"
+        # - name: LDAP_URL
+        #   value: "ldap://ldap-svc:3890"
+        # - name: LDAP_BIND_DN
+        #   value: "uid=admin,ou=people,dc=example,dc=com"
+        # - name: LDAP_BIND_PASSWORD
+        #   value: "password"
+        # - name: LDAP_BASE_DN
+        #   value: "dc=example,dc=com"
+        # - name: LDAP_USER_FILTER
+        #   value: "(&(objectClass=person)(uid=*)(!(uid=admin)))"
+        # - name: LDAP_GROUP_FILTER
+        #   value: "(objectClass=groupOfNames)"
+        # - name: LDAP_ATTRIBUTE_USER_UNIQUE_IDENTIFIER
+        #   value: "uuid"
+        # - name: LDAP_ATTRIBUTE_USER_USERNAME
+        #   value: "uid"
+        # - name: LDAP_ATTRIBUTE_USER_EMAIL
+        #   value: "mail"
+        # - name: LDAP_ATTRIBUTE_USER_FIRST_NAME
+        #   value: "givenName"
+        # - name: LDAP_ATTRIBUTE_USER_LAST_NAME
+        #   value: "sn"
+        # - name: LDAP_ATTRIBUTE_USER_PROFILE_PICTURE
+        #   value: "jpegPhoto"
+        # - name: LDAP_ATTRIBUTE_GROUP_MEMBER
+        #   value: "member"
+        # - name: LDAP_ATTRIBUTE_GROUP_UNIQUE_IDENTIFIER
+        #   value: "uuid"
+        # - name: LDAP_ATTRIBUTE_GROUP_NAME
+        #   value: "cn"
+        # - name: LDAP_ATTRIBUTE_ADMIN_GROUP
+        #   value: "lldap_admin"
