@@ -1,0 +1,12 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: skaffold-qdrant
+deploy:
+  helm:
+    releases:
+      - name: qdrant
+        remoteChart: qdrant/qdrant
+        version: 1.15.4
+        skipBuildDependencies: true
+        valuesFiles: [ values.yaml ]
