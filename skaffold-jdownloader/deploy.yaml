@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jdownloader
+  name: jdownloader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jdownloader
+  template:
+    metadata:
+      labels:
+        app: jdownloader
+    spec:
+      containers:
+      - image: ghcr.io/jlesage/jdownloader-2:v25.07.2
+        name: jdownloader-2
+        ports:
+        - containerPort: 5800
+        env:
+        - name: DARK_MODE
+          value: "1"
