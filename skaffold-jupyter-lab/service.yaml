@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jupyterlab-svc
+  name: jupyterlab-svc
+spec:
+  ports:
+  - name: jupyterlab
+    port: 8888
+    protocol: TCP
+    targetPort: 8888
+  selector:
+    app: jupyterlab

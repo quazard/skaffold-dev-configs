@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jupyterlab
+  name: jupyterlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jupyterlab
+  template:
+    metadata:
+      labels:
+        app: jupyterlab
+    spec:
+      containers:
+      - image: quay.io/jupyter/datascience-notebook:2025-11-29
+        name: datascience-notebook
+        ports:
+        - containerPort: 8888
+          protocol: TCP
