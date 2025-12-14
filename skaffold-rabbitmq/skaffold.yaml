@@ -4,14 +4,15 @@ metadata:
   name: skaffold-rabbitmq
 manifests:
   rawYaml:
-    - deploy.yaml
-    - service.yaml
+    - cluster.yaml
 portForward:
 - resourceType: service
-  resourceName: rabbitmq-svc
+  resourceName: rabbitmq-ha
+  namespace: default
   port: 15672
   localPort: 15672
 - resourceType: service
-  resourceName: rabbitmq-svc
+  resourceName: rabbitmq-ha
+  namespace: default
   port: 5672
   localPort: 5672
