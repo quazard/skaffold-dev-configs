@@ -5,10 +5,20 @@ metadata:
   namespace: default
 spec:
   replicas: 3
+  image: rabbitmq:4.2-management-alpine
   resources:
     requests:
-      cpu: "500m"
-      memory: "1Gi"
+      cpu: 1000m
+      memory: 2Gi
     limits:
-      cpu: "1"
-      memory: "2Gi"
+      cpu: 1000m
+      memory: 2Gi
+  persistence:
+    storageClassName: local-path
+    storage: 20Gi
+  # secretBackend:
+  #   vault:
+  #     role: rabbitmq
+  #     annotations:
+  #       vault.hashicorp.com/template-static-secret-render-interval: "15s"
+  #     defaultUserPath: secret/data/rabbitmq/config

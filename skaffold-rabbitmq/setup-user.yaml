@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rabbitmq-setup-sa
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: rabbitmq-setup-role
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/exec"]
+  verbs: ["get", "list", "create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rabbitmq-setup-rb
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: rabbitmq-setup-role
+subjects:
+- kind: ServiceAccount
+  name: rabbitmq-setup-sa
+  namespace: default
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rabbitmq-user-setup
+  namespace: default
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      serviceAccountName: rabbitmq-setup-sa
+      containers:
+      - name: setup
+        image: bitnami/kubectl:latest
+        command:
+        - /bin/bash
+        - -c
+        - |
+          echo "Waiting for rabbitmq-ha-server-0 to be ready..."
+          kubectl wait --for=condition=Ready pod/rabbitmq-ha-server-0 --timeout=120s
+          
+          # Retry loop for rabbitmqctl commands
+          MAX_RETRIES=10
+          RETRY_DELAY=5
+          
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "Attempt $i to setup dev_user..."
+            
+            # Check if we can run rabbitmqctl commands
+            if kubectl exec rabbitmq-ha-server-0 -- rabbitmqctl status > /dev/null 2>&1; then
+              kubectl exec rabbitmq-ha-server-0 -- rabbitmqctl add_user dev_user dev_password || true
+              kubectl exec rabbitmq-ha-server-0 -- rabbitmqctl set_user_tags dev_user administrator
+              kubectl exec rabbitmq-ha-server-0 -- rabbitmqctl set_permissions -p / dev_user ".*" ".*" ".*"
+              
+              echo "Setup successfully completed on attempt $i."
+              exit 0
+            else
+              echo "RabbitMQ node not ready for CLI commands yet. Retrying in $RETRY_DELAY seconds..."
+              sleep $RETRY_DELAY
+            fi
+          done
+          
+          echo "Failed to setup user after $MAX_RETRIES attempts."
+          exit 1
+      restartPolicy: OnFailure
+  backoffLimit: 4

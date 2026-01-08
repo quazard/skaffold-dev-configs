@@ -1,18 +1,35 @@
 apiVersion: skaffold/v3
 kind: Config
 metadata:
-  name: skaffold-rabbitmq
+  name: rabbitmq-operator
+manifests:
+  rawYaml:
+    - cluster-operator.yaml
+deploy:
+  kubectl: {}
+
+---
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: rabbitmq-cluster
+requires:
+  - path: .
+    configs: [rabbitmq-operator]
 manifests:
   rawYaml:
     - cluster.yaml
+    - setup-user.yaml
+deploy:
+  kubectl: {}
 portForward:
-- resourceType: service
-  resourceName: rabbitmq-ha
+- resourceType: pod
+  resourceName: rabbitmq-ha-server-0
   namespace: default
   port: 15672
   localPort: 15672
-- resourceType: service
-  resourceName: rabbitmq-ha
+- resourceType: pod
+  resourceName: rabbitmq-ha-server-0
   namespace: default
   port: 5672
   localPort: 5672
