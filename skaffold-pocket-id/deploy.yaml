@@ -15,7 +15,7 @@ spec:
         app: pocket-id
     spec:
       containers:
-      - image: ghcr.io/pocket-id/pocket-id:v1.15.0
+      - image: ghcr.io/pocket-id/pocket-id:v2.1.0
         name: pocket-id
         ports:
         - containerPort: 1411
@@ -35,6 +35,8 @@ spec:
           value: "postgres"
         - name: DB_CONNECTION_STRING
           value: "postgresql://pocket_id:pocket_id@postgres-svc:5432/pocket_id?sslmode=disable"
+        - name: ENCRYPTION_KEY
+          value: "0123456789012345"
         # - name: LDAP_ENABLED
         #   value: "true"
         # - name: LDAP_URL
