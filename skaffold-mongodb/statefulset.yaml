@@ -18,7 +18,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-      - image: mongo:5.0.4
+      - image: mongo:8.2.3
         name: mongodb
         ports:
         - name: http
@@ -47,16 +47,16 @@ spec:
             command:
             - bash
             - "-c"
-            - echo 'db.stats().ok' | mongo -u $HEALTHCHECK_USERNAME -p $HEALTHCHECK_PASSWORD localhost:27017/test --quiet
+            - echo 'db.runCommand("ping").ok' | mongosh -u $HEALTHCHECK_USERNAME -p $HEALTHCHECK_PASSWORD --authenticationDatabase test localhost:27017/test --quiet | grep -q 1
           initialDelaySeconds: 20
           periodSeconds: 60
           failureThreshold: 3
         readinessProbe:
           exec:
             command:
-            - bash
-            - "-c"
-            - echo 'db.stats().ok' | mongo -u $HEALTHCHECK_USERNAME -p $HEALTHCHECK_PASSWORD localhost:27017/test --quiet
+            - /bin/sh
+            - -c
+            - echo 'db.runCommand("ping").ok' | mongosh -u $HEALTHCHECK_USERNAME -p $HEALTHCHECK_PASSWORD --authenticationDatabase test localhost:27017/test --quiet | grep -q 1
           initialDelaySeconds: 20
           periodSeconds: 60
           failureThreshold: 3
